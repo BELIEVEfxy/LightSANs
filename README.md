@@ -4,9 +4,7 @@ This is our Pytorch implementation for our SIGIR 2021 short paper:
 
 # Overview
 we propose the low-rank decomposed self-attention networks **LightSANs** to improve the effectiveness and efficiency of SANs-based recommenders. Particularly, it projects user's historical items into a small constant number of latent interests, and leverages item-to-interest interaction to generate the user history representation. Besides, the decoupled position encoding is introduced, which expresses the items’ sequential relationships much more precisely. The overall framework of LightSANs is depicted bellow.
-
-![image](https://github.com/BELIEVEfxy/LightSANs/blob/main/model.png){:height=“100px” width=“100px”}
-<img src="https://github.com/BELIEVEfxy/LightSANs/blob/main/model.png" width = "200px" align=center />
+<img src="https://github.com/BELIEVEfxy/LightSANs/blob/main/model.png" width = "600px" align=center />
 
 # Requirements
 - Python 3.6
