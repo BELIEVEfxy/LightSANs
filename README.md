@@ -7,14 +7,15 @@ This is our Pytorch implementation for our SIGIR 2021 short paper:
 # Requirements
 - Python 3.6
 - Pytorch >= 1.3
+Notice: For all sequencial recommendation models, we use the first version of RecBole v0.1.1 to do our experiments. The more details are on [RecBole](https://github.com/RUCAIBox/RecBole). For efficient Transformers([Synthesizer](https://github.com/leaderj1001/Synthesizer-Rethinking-Self-Attention-Transformer-Models), [LinTrans](https://linear-transformers.com), [Linformer](https://github.com/tatp22/linformer-pytorch), [Performer](https://github.com/lucidrains/performer-pytorch)), we implement them under RecBole Framework based on the source code, in order to ensure fair comparation. 
 
 # Datasets
-We use three real-world benchmark datasets, including Yelp, Amazon Books and ML-1M. The details about full version of these datasets are on [this link](https://github.com/RUCAIBox/RecSysDatasets). For all datasets, we group the interaction records by users and sort them by the interaction timestamps ascendingly. 
+We use three real-world benchmark datasets, including Yelp, Amazon Books and ML-1M. The details about full version of these datasets are on [RecSysDatasets](https://github.com/RUCAIBox/RecSysDatasets). For all datasets, we group the interaction records by users and sort them by the interaction timestamps ascendingly. 
 
 # Parameter Settings
 We apply the leave-one-out strategy for evaluation, and employ HIT@$k$ and NDCG@$k$ to evaluate the performance. For fair evaluation, we pair each ground truth item in the test set with all items of dataset.
 
-For all SANs-based models, 2 layers of self-attention are deployed, both of which have 2 attention heads. The hidden-dimension of embeddings are set to 64 uniformly. The maximum sequence length is 100, 150 and 200 and the parameter $k$ of LightSANs is 10, 15 and 20 on Yelp, Books and ML-1M datasets, respectively. The low-rank projected dimension in Synthesizer, Linformer and Performer are set as the same as $k$. We use the Adam optimizer with a learning rate of 0.003 on GPU (TITAN Xp), where the batch size is set as 1024 and 2048 in the training and the evaluation stage, respectively. 
+For all SANs-based models, 2 layers of self-attention are deployed, both of which have 2 attention heads. The hidden-dimension of embeddings are set to 64 uniformly. The maximum sequence length is 100, 150 and 200 and the parameter $k$ of LightSANs is 10, 15 and 20 on Yelp, Books and ML-1M datasets, respectively. The dropout rate of turning off neurons is 0.2 for ML-1M and 0.5 for the other four datasets due to their sparsity. The low-rank projected dimension in Synthesizer, Linformer and Performer are set as the same as $k$. We use the Adam optimizer with a learning rate of 0.003 on GPU (TITAN Xp), where the batch size is set as 1024 and 2048 in the training and the evaluation stage, respectively. 
 
 More details about the settings are in .yaml files in properties/dataset and properties/model.
 
@@ -33,5 +34,5 @@ Any scientific publications that use our codes and datasets should cite the foll
     year = {2021},
 }
 ````
-
+If you have any questions for our paper or codes, please send an email to xinyan.fan@ruc.edu.cn.
 
