@@ -1,41 +1,187 @@
-# LightSANs
-This is our Pytorch implementation for our SIGIR 2021 short paper:
-> Xinyan Fan, Zheng Liu, Jianxun Lian, Wayne Xin Zhao, Xing Xie, and Ji-Rong Wen (2021). "Lighter and Better: Low-Rank Decomposed Self-Attention Networks for Next-Item Recommendation." In SIGIR 2021.
+![RecBole Logo](asset/logo.png)
 
-# Overview
-we propose the low-rank decomposed self-attention networks **LightSANs** to improve the effectiveness and efficiency of SANs-based recommenders. Particularly, it projects user's historical items into a small constant number of latent interests, and leverages item-to-interest interaction to generate the user history representation. Besides, the decoupled position encoding is introduced, which expresses the items’ sequential relationships much more precisely. The overall framework of LightSANs is depicted bellow.
-<img src="https://github.com/BELIEVEfxy/LightSANs/blob/main/model.png" width = "500px" align=center />
+--------------------------------------------------------------------------------
 
-# Requirements
-- Python 3.6
-- Pytorch >= 1.3
+# RecBole (伯乐)
 
-Notice: For all sequencial recommendation models, we use the first version of RecBole v0.1.1 to do our experiments. The more details are on [RecBole](https://github.com/RUCAIBox/RecBole). For efficient Transformers([Synthesizer](https://github.com/leaderj1001/Synthesizer-Rethinking-Self-Attention-Transformer-Models), [LinTrans](https://linear-transformers.com), [Linformer](https://github.com/tatp22/linformer-pytorch), [Performer](https://github.com/lucidrains/performer-pytorch)), we implement them under RecBole Framework based on the source code, in order to ensure fair comparation. 
+*“世有伯乐，然后有千里马。千里马常有，而伯乐不常有。”——韩愈《马说》*
 
-# Datasets
-We use three real-world benchmark datasets, including Yelp, Amazon Books and ML-1M. The details about full version of these datasets are on [RecSysDatasets](https://github.com/RUCAIBox/RecSysDatasets). For all datasets, we group the interaction records by users and sort them by the interaction timestamps ascendingly. 
+[![PyPi Latest Release](https://img.shields.io/pypi/v/recbole)](https://pypi.org/project/recbole/)
+[![Conda Latest Release](https://anaconda.org/aibox/recbole/badges/version.svg)](https://anaconda.org/aibox/recbole)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
-# Parameter Settings
-We apply the leave-one-out strategy for evaluation, and employ HIT@k and NDCG@k to evaluate the performance. For fair evaluation, we pair each ground truth item in the test set with all items of dataset.
 
-For all SANs-based models, 2 layers of self-attention are deployed, both of which have 2 attention heads. The hidden-dimension of embeddings are set to 64 uniformly. The maximum sequence length is 100, 150 and 200 and the parameter _k_ of LightSANs is 10, 15 and 20 on Yelp, Books and ML-1M datasets, respectively. The dropout rate of turning off neurons is 0.2 for ML-1M and 0.5 for the other four datasets due to their sparsity. The low-rank projected dimension in Synthesizer, Linformer and Performer are set as the same as _k_. We use the Adam optimizer with a learning rate of 0.003 on GPU (TITAN Xp), where the batch size is set as 1024 and 2048 in the training and the evaluation stage, respectively. 
+[HomePage] | [Docs] | [Datasets] | [Paper]
 
-More details about the settings are in .yaml files in properties/dataset and properties/model.
+[HomePage]: https://recbole.io/
+[Docs]: https://recbole.io/docs/
+[Datasets]: https://github.com/RUCAIBox/RecDatasets
+[Paper]: https://arxiv.org/abs/2011.01731
 
-# Acknowledgement
-Any scientific publications that use our codes and datasets should cite the following paper as the reference:
-````
-@inproceedings{Fan-SIGIR-2021,
-    title = "Lighter and Better: Low-Rank Decomposed Self-Attention Networks for Next-Item Recommendation",
-    author = {Xinyan Fan and
-              Zheng Liu and
-              Jianxun Lian and
-              Wayne Xin Zhao and
-              Xing Xie and 
-              Ji{-}Rong Wen},
-    booktitle = {{SIGIR}},
-    year = {2021},
+RecBole is developed based on Python and PyTorch for reproducing and developing recommendation algorithms in a unified,
+comprehensive and efficient framework for research purpose.
+Our library includes 53 recommendation algorithms, covering four major categories:
+
++ General Recommendation
++ Sequential Recommendation
++ Context-aware Recommendation
++ Knowledge-based Recommendation
+
+We design a unified and flexible data file format, and provide the support for 27 benchmark recommendation datasets.
+A user can apply the provided script to process the original data copy, or simply download the processed datasets
+by our team.
+
+
+<p align="center">
+  <img src="asset/framework.png" alt="RecBole v0.1 architecture" width="600">
+  <br>
+  <b>Figure</b>: RecBole Overall Architecture
+</p>
+
+
+## Feature
++ **General and extensible data structure.** We design general and extensible data structures to unify the formatting and
+usage of various recommendation datasets.
+
++ **Comprehensive benchmark models and datasets.** We implement 53 commonly used recommendation algorithms, and provide
+the formatted copies of 27 recommendation datasets.
+
++ **Efficient GPU-accelerated execution.** We optimize the efficiency of our library with a number of improved techniques
+oriented to the GPU environment.
+
++ **Extensive and standard evaluation protocols.** We support a series of widely adopted evaluation protocols or settings
+for testing and comparing recommendation algorithms.
+
+## RecBole News
+**11/03/2020**: We release the first version of RecBole **v0.1.1**.
+
+
+## Installation
+RecBole works with the following operating systems:
+
+* Linux
+* Windows 10
+* macOS X
+
+RecBole requires Python version 3.6 or later.
+
+RecBole requires torch version 1.6.0 or later. If you want to use RecBole with GPU,
+please ensure that CUDA or cudatoolkit version is 9.2 or later.
+This requires NVIDIA driver version >= 396.26 (for Linux) or >= 397.44 (for Windows10).
+
+### Install from conda
+
+```bash
+conda install -c aibox recbole
+```
+
+### Install from pip
+
+```bash
+pip install recbole
+```
+
+### Install from source
+```bash
+git clone https://github.com/RUCAIBox/RecBole.git && cd RecBole
+pip install -e . --verbose
+```
+
+## Quick-Start
+With the source code, you can use the provided script for initial usage of our library:
+
+```bash
+python run_recbole.py
+```
+
+This script will run the BPR model on the ml-100k dataset.
+
+Typically, this example takes less than one minute. We will obtain some output like:
+
+```
+INFO ml-100k
+The number of users: 944
+Average actions of users: 106.04453870625663
+The number of items: 1683
+Average actions of items: 59.45303210463734
+The number of inters: 100000
+The sparsity of the dataset: 93.70575143257098%
+
+INFO Evaluation Settings:
+Group by user_id
+Ordering: {'strategy': 'shuffle'}
+Splitting: {'strategy': 'by_ratio', 'ratios': [0.8, 0.1, 0.1]}
+Negative Sampling: {'strategy': 'full', 'distribution': 'uniform'}
+
+INFO BPRMF(
+    (user_embedding): Embedding(944, 64)
+    (item_embedding): Embedding(1683, 64)
+    (loss): BPRLoss()
+)
+Trainable parameters: 168128
+
+INFO epoch 0 training [time: 0.27s, train loss: 27.7231]
+INFO epoch 0 evaluating [time: 0.12s, valid_score: 0.021900]
+INFO valid result:
+recall@10: 0.0073  mrr@10: 0.0219  ndcg@10: 0.0093  hit@10: 0.0795  precision@10: 0.0088
+
+...
+
+INFO epoch 63 training [time: 0.19s, train loss: 4.7660]
+INFO epoch 63 evaluating [time: 0.08s, valid_score: 0.394500]
+INFO valid result:
+recall@10: 0.2156  mrr@10: 0.3945  ndcg@10: 0.2332  hit@10: 0.7593  precision@10: 0.1591
+
+INFO Finished training, best eval result in epoch 52
+INFO Loading model structure and parameters from saved/***.pth
+INFO best valid result:
+recall@10: 0.2169  mrr@10: 0.4005  ndcg@10: 0.235  hit@10: 0.7582  precision@10: 0.1598
+INFO test result:
+recall@10: 0.2368  mrr@10: 0.4519  ndcg@10: 0.2768  hit@10: 0.7614  precision@10: 0.1901
+```
+
+If you want to change the parameters, such as ``learning_rate``, ``embedding_size``, just set the additional command
+parameters as you need:
+
+```bash
+python run_recbole.py --learning_rate=0.0001 --embedding_size=128
+```
+
+If you want to change the models, just run the script by setting additional command parameters:
+
+```bash
+python run_recbole.py --model=[model_name]
+```
+
+## RecBole Major Releases
+| Releases  | Date   | Features |
+|-----------|--------|-------------------------|
+| v0.1.1    | 11/03/2020 |  Basic RecBole |
+
+
+## Contributing
+
+Please let us know if you encounter a bug or have any suggestions by [filing an issue](https://github.com/RUCAIBox/RecBole/issues).
+
+We welcome all contributions from bug fixes to new features and extensions.
+
+We expect all contributions discussed in the issue tracker and going through PRs.
+
+
+## Cite
+If you find RecBole useful for your research or development, please cite the following [paper](https://arxiv.org/abs/2011.01731):
+
+```
+@article{recbole,
+    title={RecBole: Towards a Unified, Comprehensive and Efficient Framework for Recommendation Algorithms},
+    author={Wayne Xin Zhao and Shanlei Mu and Yupeng Hou and Zihan Lin and Kaiyuan Li and Yushuo Chen and Yujie Lu and Hui Wang and Changxin Tian and Xingyu Pan and Yingqian Min and Zhichao Feng and Xinyan Fan and Xu Chen and Pengfei Wang and Wendi Ji and Yaliang Li and Xiaoling Wang and Ji-Rong Wen},
+    year={2020},
+    journal={arXiv preprint arXiv:2011.01731}
 }
-````
-If you have any questions for our paper or codes, please send an email to xinyan.fan@ruc.edu.cn.
+```
 
+## The Team
+RecBole is developed and maintained by [RUC, BUPT, ECNU](https://www.recbole.io/about.html).
+
+## License
+RecBole uses [MIT License](./LICENSE).
