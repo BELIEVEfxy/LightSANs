@@ -1,0 +1,26 @@
+# define the UIRT columns
+USER_ID_FIELD: user_id
+ITEM_ID_FIELD: item_id
+NEG_PREFIX: neg_
+LABEL_FIELD: label
+TIME_FIELD: timestamp
+ITEM_LIST_LENGTH_FIELD: item_length
+LIST_SUFFIX: _list
+MAX_ITEM_LIST_LENGTH: 50
+POSITION_FIELD: position_id
+
+# select load columns
+load_col:
+    inter: [user_id, item_id, rating, timestamp]
+
+# data separator
+field_separator: "\t"
+seq_separator: " "
+
+# data filter
+lowest_val:
+    rating: 3
+
+drop_filter_field: False
+min_user_inter_num: 10
+min_item_inter_num: 0
