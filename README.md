@@ -16,14 +16,14 @@ Notice: For all sequencial recommendation models, we use the first version of Re
 ## Datasets
 We use three real-world benchmark datasets, including Yelp, Amazon Books and ML-1M. The details about full version of these datasets are on [RecSysDatasets](https://github.com/RUCAIBox/RecSysDatasets). For all datasets, we group the interaction records by users and sort them by the interaction timestamps ascendingly. 
 
-Notice: all datasets should saved in **dataset/**. For example, ml-1m dataset should saved in **dataset/ml-1m/ml-1m.inter**.
+Notice: all datasets should be saved in **dataset/**. For example, ml-1m dataset should saved in **dataset/ml-1m/ml-1m.inter**.
 
 ## Parameter Settings
 We apply the leave-one-out strategy for evaluation, and employ HIT@k and NDCG@k to evaluate the performance. For fair evaluation, we pair each ground truth item in the test set with all items of dataset.
 
 For all SANs-based models, 2 layers of self-attention are deployed, both of which have 2 attention heads. The hidden-dimension of embeddings are set to 64 uniformly. The maximum sequence length is 100, 150 and 200 and the parameter _k_interests_ of LightSANs is 10, 15 and 20 on Yelp, Books and ML-1M datasets, respectively. The dropout rate of turning off neurons is 0.2 for ML-1M and 0.5 for the other four datasets due to their sparsity. The low-rank projected dimension in Synthesizer, Linformer and Performer are set as the same as _k_interests_. We use the Adam optimizer with a learning rate of 0.003 on GPU (TITAN Xp), where the batch size is set as 1024 and 2048 in the training and the evaluation stage, respectively. 
 
-Notice: More details about dataset settings are in .yaml files in **'recbole/properties/dataset'**, model settings are in **'recbole/properties/model/LightSANs.yaml'** and train/eval settings are in **'recbole/properties/overall.yaml'**.
+Notice: More details about dataset settings are in .yaml files in **'recbole/properties/dataset'**, model settings are in **'recbole/properties/model/LightSANs.yaml'** and train/evaluation settings are in **'recbole/properties/overall.yaml'**.
 
 ## Run
 You can use the sh command to run the model:
