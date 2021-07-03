@@ -18,6 +18,7 @@ import torch
 import torch.optim as optim
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 from time import time
 from logging import getLogger
@@ -133,7 +134,15 @@ class Trainer(AbstractTrainer):
         """
         self.model.train()
         total_loss = None
-        for batch_idx, interaction in enumerate(train_data):
+
+        iter_data = (
+            tqdm(
+                enumerate(train_data),
+                total=len(train_data)
+            )
+        )
+
+        for batch_idx, interaction in iter_data:
             interaction = interaction.to(self.device)
             self.optimizer.zero_grad()
             losses = self.model.calculate_loss(interaction)
@@ -366,7 +375,15 @@ class Trainer(AbstractTrainer):
 
         batch_matrix_list = []
         test_start_time = time()
-        for batch_idx, batched_data in enumerate(eval_data):
+
+        iter_data = (
+            tqdm(
+                enumerate(eval_data),
+                total=len(eval_data)
+            )
+        )
+
+        for batch_idx, batched_data in iter_data:
             if eval_data.dl_type == DataLoaderType.FULL:
                 if self.eval_type == EvaluatorType.INDIVIDUAL:
                     raise ValueError('full sort can\'t use LossEvaluator')
