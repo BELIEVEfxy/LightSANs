@@ -52,4 +52,4 @@ Any scientific publications that use our codes and datasets should cite the foll
     year = {2021},
 }
 ````
-If you have any questions for our paper or codes, please send an email to xinyan.fan@ruc.edu.cn.
+If you have any questions for our paper or codes, please send an email to xinyanruc@126.com.
