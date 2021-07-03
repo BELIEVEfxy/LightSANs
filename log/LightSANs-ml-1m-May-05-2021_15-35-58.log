@@ -1,0 +1,322 @@
+Wed 05 May 2021 15:35:58 INFO General Hyper Parameters: 
+gpu_id=3
+use_gpu=True
+seed=2020
+state=INFO
+reproducibility=True
+data_path=dataset/ml-1m
+
+Training Hyper Parameters: 
+checkpoint_dir=saved
+epochs=500
+train_batch_size=1024
+learner=adam
+learning_rate=0.003
+training_neg_sample_num=0
+eval_step=1
+stopping_step=10
+
+Evaluation Hyper Parameters: 
+eval_setting=TO_LS,full
+group_by_user=True
+leave_one_num=2
+real_time_process=True
+metrics=['Recall', 'MRR', 'NDCG', 'Hit', 'Precision']
+topk=[10]
+valid_metric=MRR@10
+eval_batch_size=2048
+
+Dataset Hyper Parameters: 
+field_separator=	
+seq_separator= 
+USER_ID_FIELD=user_id
+ITEM_ID_FIELD=item_id
+RATING_FIELD=rating
+TIME_FIELD=timestamp
+seq_len=None
+LABEL_FIELD=label
+threshold=None
+NEG_PREFIX=neg_
+load_col={'inter': ['user_id', 'item_id', 'rating', 'timestamp']}
+unload_col=None
+additional_feat_suffix=None
+max_user_inter_num=None
+min_user_inter_num=None
+max_item_inter_num=None
+min_item_inter_num=None
+lowest_val={'rating': 3}
+highest_val=None
+equal_val=None
+not_equal_val=None
+drop_filter_field=True
+fields_in_same_space=None
+fill_nan=True
+preload_weight=None
+drop_preload_weight=True
+normalize_field=None
+normalize_all=True
+ITEM_LIST_LENGTH_FIELD=item_length
+LIST_SUFFIX=_list
+MAX_ITEM_LIST_LENGTH=200
+POSITION_FIELD=position_id
+HEAD_ENTITY_ID_FIELD=head_id
+TAIL_ENTITY_ID_FIELD=tail_id
+RELATION_ID_FIELD=relation_id
+ENTITY_ID_FIELD=entity_id
+
+
+Wed 05 May 2021 15:35:59 INFO ml-1m
+The number of users: 6040
+Average actions of users: 138.51266766020865
+The number of items: 3629
+Average actions of items: 230.56174200661522
+The number of inters: 836478
+The sparsity of the dataset: 96.18380448885814%
+Remain Fields: ['user_id', 'item_id', 'timestamp']
+Wed 05 May 2021 15:36:02 INFO Build [ModelType.SEQUENTIAL] DataLoader for [train] with format [InputType.POINTWISE]
+Wed 05 May 2021 15:36:02 INFO Evaluation Setting:
+	Group by user_id
+	Ordering: {'strategy': 'by', 'field': ['timestamp'], 'ascending': True}
+	Splitting: {'strategy': 'loo', 'leave_one_num': 2}
+	No Negative Sampling
+Wed 05 May 2021 15:36:02 INFO batch_size = [[1024]], shuffle = [True]
+
+Wed 05 May 2021 15:36:05 INFO Build [ModelType.SEQUENTIAL] DataLoader for [evaluation] with format [InputType.POINTWISE]
+Wed 05 May 2021 15:36:05 INFO Evaluation Setting:
+	Group by user_id
+	Ordering: {'strategy': 'by', 'field': ['timestamp'], 'ascending': True}
+	Splitting: {'strategy': 'loo', 'leave_one_num': 2}
+	Negative Sampling: {'strategy': 'full', 'distribution': 'uniform'}
+Wed 05 May 2021 15:36:05 INFO batch_size = [[2048, 2048]], shuffle = [False]
+
+Wed 05 May 2021 15:36:10 INFO LightSANs(
+  (item_embedding): Embedding(3629, 64, padding_idx=0)
+  (position_embedding): Embedding(200, 64)
+  (trm_encoder): LightTransformerEncoder(
+    (layer): ModuleList(
+      (0): LightTransformerLayer(
+        (multi_head_attention): LightMultiHeadAttention(
+          (query): Linear(in_features=64, out_features=64, bias=True)
+          (key): Linear(in_features=64, out_features=64, bias=True)
+          (value): Linear(in_features=64, out_features=64, bias=True)
+          (attpooling_key): ItemToInterestAggregation()
+          (attpooling_value): ItemToInterestAggregation()
+          (pos_q_linear): Linear(in_features=64, out_features=64, bias=True)
+          (pos_k_linear): Linear(in_features=64, out_features=64, bias=True)
+          (pos_ln): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (attn_dropout): Dropout(p=0.2, inplace=False)
+          (dense): Linear(in_features=64, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (out_dropout): Dropout(p=0.2, inplace=False)
+        )
+        (feed_forward): FeedForward(
+          (dense_1): Linear(in_features=64, out_features=256, bias=True)
+          (dense_2): Linear(in_features=256, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.2, inplace=False)
+        )
+      )
+      (1): LightTransformerLayer(
+        (multi_head_attention): LightMultiHeadAttention(
+          (query): Linear(in_features=64, out_features=64, bias=True)
+          (key): Linear(in_features=64, out_features=64, bias=True)
+          (value): Linear(in_features=64, out_features=64, bias=True)
+          (attpooling_key): ItemToInterestAggregation()
+          (attpooling_value): ItemToInterestAggregation()
+          (pos_q_linear): Linear(in_features=64, out_features=64, bias=True)
+          (pos_k_linear): Linear(in_features=64, out_features=64, bias=True)
+          (pos_ln): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (attn_dropout): Dropout(p=0.2, inplace=False)
+          (dense): Linear(in_features=64, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (out_dropout): Dropout(p=0.2, inplace=False)
+        )
+        (feed_forward): FeedForward(
+          (dense_1): Linear(in_features=64, out_features=256, bias=True)
+          (dense_2): Linear(in_features=256, out_features=64, bias=True)
+          (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.2, inplace=False)
+        )
+      )
+    )
+  )
+  (LayerNorm): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+  (dropout): Dropout(p=0.2, inplace=False)
+  (loss_fct): CrossEntropyLoss()
+)
+Trainable parameters: 367168
+Wed 05 May 2021 15:38:57 INFO epoch 0 training [time: 166.86s, train loss: 5289.5135]
+Wed 05 May 2021 15:38:57 INFO epoch 0 evaluating [time: 0.67s, valid_score: 0.049800]
+Wed 05 May 2021 15:38:57 INFO valid result: 
+recall@10 : 0.1602    mrr@10 : 0.0498    ndcg@10 : 0.0752    hit@10 : 0.1602    precision@10 : 0.0160    
+Wed 05 May 2021 15:38:58 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 15:41:45 INFO epoch 1 training [time: 167.38s, train loss: 4648.0888]
+Wed 05 May 2021 15:41:46 INFO epoch 1 evaluating [time: 0.64s, valid_score: 0.061900]
+Wed 05 May 2021 15:41:46 INFO valid result: 
+recall@10 : 0.1848    mrr@10 : 0.0619    ndcg@10 : 0.0902    hit@10 : 0.1848    precision@10 : 0.0185    
+Wed 05 May 2021 15:41:46 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 15:44:33 INFO epoch 2 training [time: 167.47s, train loss: 4532.9839]
+Wed 05 May 2021 15:44:34 INFO epoch 2 evaluating [time: 0.64s, valid_score: 0.065900]
+Wed 05 May 2021 15:44:34 INFO valid result: 
+recall@10 : 0.1997    mrr@10 : 0.0659    ndcg@10 : 0.0967    hit@10 : 0.1997    precision@10 : 0.0200    
+Wed 05 May 2021 15:44:34 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 15:47:21 INFO epoch 3 training [time: 166.90s, train loss: 4481.3711]
+Wed 05 May 2021 15:47:21 INFO epoch 3 evaluating [time: 0.65s, valid_score: 0.065700]
+Wed 05 May 2021 15:47:21 INFO valid result: 
+recall@10 : 0.1974    mrr@10 : 0.0657    ndcg@10 : 0.0961    hit@10 : 0.1974    precision@10 : 0.0197    
+Wed 05 May 2021 15:50:08 INFO epoch 4 training [time: 166.89s, train loss: 4449.2369]
+Wed 05 May 2021 15:50:09 INFO epoch 4 evaluating [time: 0.65s, valid_score: 0.070300]
+Wed 05 May 2021 15:50:09 INFO valid result: 
+recall@10 : 0.2127    mrr@10 : 0.0703    ndcg@10 : 0.1031    hit@10 : 0.2127    precision@10 : 0.0213    
+Wed 05 May 2021 15:50:09 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 15:52:56 INFO epoch 5 training [time: 167.00s, train loss: 4425.1004]
+Wed 05 May 2021 15:52:56 INFO epoch 5 evaluating [time: 0.64s, valid_score: 0.071600]
+Wed 05 May 2021 15:52:56 INFO valid result: 
+recall@10 : 0.2132    mrr@10 : 0.0716    ndcg@10 : 0.1042    hit@10 : 0.2132    precision@10 : 0.0213    
+Wed 05 May 2021 15:52:56 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 15:55:43 INFO epoch 6 training [time: 166.80s, train loss: 4406.6357]
+Wed 05 May 2021 15:55:44 INFO epoch 6 evaluating [time: 0.65s, valid_score: 0.071300]
+Wed 05 May 2021 15:55:44 INFO valid result: 
+recall@10 : 0.2183    mrr@10 : 0.0713    ndcg@10 : 0.1052    hit@10 : 0.2183    precision@10 : 0.0218    
+Wed 05 May 2021 15:58:31 INFO epoch 7 training [time: 166.98s, train loss: 4393.2882]
+Wed 05 May 2021 15:58:31 INFO epoch 7 evaluating [time: 0.63s, valid_score: 0.070300]
+Wed 05 May 2021 15:58:31 INFO valid result: 
+recall@10 : 0.2125    mrr@10 : 0.0703    ndcg@10 : 0.1031    hit@10 : 0.2125    precision@10 : 0.0212    
+Wed 05 May 2021 16:01:19 INFO epoch 8 training [time: 167.02s, train loss: 4381.3082]
+Wed 05 May 2021 16:01:19 INFO epoch 8 evaluating [time: 0.64s, valid_score: 0.074500]
+Wed 05 May 2021 16:01:19 INFO valid result: 
+recall@10 : 0.2194    mrr@10 : 0.0745    ndcg@10 : 0.1080    hit@10 : 0.2194    precision@10 : 0.0219    
+Wed 05 May 2021 16:01:19 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 16:04:06 INFO epoch 9 training [time: 167.09s, train loss: 4371.4629]
+Wed 05 May 2021 16:04:07 INFO epoch 9 evaluating [time: 0.79s, valid_score: 0.074500]
+Wed 05 May 2021 16:04:07 INFO valid result: 
+recall@10 : 0.2209    mrr@10 : 0.0745    ndcg@10 : 0.1083    hit@10 : 0.2209    precision@10 : 0.0221    
+Wed 05 May 2021 16:06:54 INFO epoch 10 training [time: 166.59s, train loss: 4363.7136]
+Wed 05 May 2021 16:06:54 INFO epoch 10 evaluating [time: 0.65s, valid_score: 0.072800]
+Wed 05 May 2021 16:06:54 INFO valid result: 
+recall@10 : 0.2191    mrr@10 : 0.0728    ndcg@10 : 0.1066    hit@10 : 0.2191    precision@10 : 0.0219    
+Wed 05 May 2021 16:09:41 INFO epoch 11 training [time: 166.80s, train loss: 4356.2712]
+Wed 05 May 2021 16:09:42 INFO epoch 11 evaluating [time: 0.62s, valid_score: 0.075500]
+Wed 05 May 2021 16:09:42 INFO valid result: 
+recall@10 : 0.2186    mrr@10 : 0.0755    ndcg@10 : 0.1086    hit@10 : 0.2186    precision@10 : 0.0219    
+Wed 05 May 2021 16:09:42 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 16:12:29 INFO epoch 12 training [time: 166.82s, train loss: 4349.4343]
+Wed 05 May 2021 16:12:29 INFO epoch 12 evaluating [time: 0.64s, valid_score: 0.075300]
+Wed 05 May 2021 16:12:29 INFO valid result: 
+recall@10 : 0.2228    mrr@10 : 0.0753    ndcg@10 : 0.1092    hit@10 : 0.2228    precision@10 : 0.0223    
+Wed 05 May 2021 16:15:16 INFO epoch 13 training [time: 166.72s, train loss: 4343.6775]
+Wed 05 May 2021 16:15:17 INFO epoch 13 evaluating [time: 0.63s, valid_score: 0.074300]
+Wed 05 May 2021 16:15:17 INFO valid result: 
+recall@10 : 0.2228    mrr@10 : 0.0743    ndcg@10 : 0.1085    hit@10 : 0.2228    precision@10 : 0.0223    
+Wed 05 May 2021 16:18:04 INFO epoch 14 training [time: 167.20s, train loss: 4339.2512]
+Wed 05 May 2021 16:18:04 INFO epoch 14 evaluating [time: 0.64s, valid_score: 0.076900]
+Wed 05 May 2021 16:18:04 INFO valid result: 
+recall@10 : 0.2299    mrr@10 : 0.0769    ndcg@10 : 0.1122    hit@10 : 0.2299    precision@10 : 0.0230    
+Wed 05 May 2021 16:18:04 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 16:20:52 INFO epoch 15 training [time: 167.36s, train loss: 4334.2443]
+Wed 05 May 2021 16:20:52 INFO epoch 15 evaluating [time: 0.64s, valid_score: 0.076500]
+Wed 05 May 2021 16:20:52 INFO valid result: 
+recall@10 : 0.2277    mrr@10 : 0.0765    ndcg@10 : 0.1116    hit@10 : 0.2277    precision@10 : 0.0228    
+Wed 05 May 2021 16:23:40 INFO epoch 16 training [time: 167.26s, train loss: 4330.5216]
+Wed 05 May 2021 16:23:40 INFO epoch 16 evaluating [time: 0.63s, valid_score: 0.075900]
+Wed 05 May 2021 16:23:40 INFO valid result: 
+recall@10 : 0.2259    mrr@10 : 0.0759    ndcg@10 : 0.1105    hit@10 : 0.2259    precision@10 : 0.0226    
+Wed 05 May 2021 16:26:28 INFO epoch 17 training [time: 167.39s, train loss: 4326.1950]
+Wed 05 May 2021 16:26:28 INFO epoch 17 evaluating [time: 0.64s, valid_score: 0.075500]
+Wed 05 May 2021 16:26:28 INFO valid result: 
+recall@10 : 0.2286    mrr@10 : 0.0755    ndcg@10 : 0.1108    hit@10 : 0.2286    precision@10 : 0.0229    
+Wed 05 May 2021 16:29:15 INFO epoch 18 training [time: 166.77s, train loss: 4323.5990]
+Wed 05 May 2021 16:29:16 INFO epoch 18 evaluating [time: 0.64s, valid_score: 0.077800]
+Wed 05 May 2021 16:29:16 INFO valid result: 
+recall@10 : 0.2304    mrr@10 : 0.0778    ndcg@10 : 0.1131    hit@10 : 0.2304    precision@10 : 0.0230    
+Wed 05 May 2021 16:29:16 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 16:32:02 INFO epoch 19 training [time: 166.59s, train loss: 4319.5115]
+Wed 05 May 2021 16:32:03 INFO epoch 19 evaluating [time: 0.63s, valid_score: 0.079400]
+Wed 05 May 2021 16:32:03 INFO valid result: 
+recall@10 : 0.2343    mrr@10 : 0.0794    ndcg@10 : 0.1151    hit@10 : 0.2343    precision@10 : 0.0234    
+Wed 05 May 2021 16:32:03 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 16:34:50 INFO epoch 20 training [time: 166.55s, train loss: 4316.7125]
+Wed 05 May 2021 16:34:50 INFO epoch 20 evaluating [time: 0.64s, valid_score: 0.078900]
+Wed 05 May 2021 16:34:50 INFO valid result: 
+recall@10 : 0.2314    mrr@10 : 0.0789    ndcg@10 : 0.1141    hit@10 : 0.2314    precision@10 : 0.0231    
+Wed 05 May 2021 16:37:37 INFO epoch 21 training [time: 166.82s, train loss: 4314.1688]
+Wed 05 May 2021 16:37:38 INFO epoch 21 evaluating [time: 0.64s, valid_score: 0.078700]
+Wed 05 May 2021 16:37:38 INFO valid result: 
+recall@10 : 0.2299    mrr@10 : 0.0787    ndcg@10 : 0.1136    hit@10 : 0.2299    precision@10 : 0.0230    
+Wed 05 May 2021 16:40:24 INFO epoch 22 training [time: 166.64s, train loss: 4311.5621]
+Wed 05 May 2021 16:40:25 INFO epoch 22 evaluating [time: 0.64s, valid_score: 0.077600]
+Wed 05 May 2021 16:40:25 INFO valid result: 
+recall@10 : 0.2269    mrr@10 : 0.0776    ndcg@10 : 0.1121    hit@10 : 0.2269    precision@10 : 0.0227    
+Wed 05 May 2021 16:43:11 INFO epoch 23 training [time: 166.60s, train loss: 4309.3115]
+Wed 05 May 2021 16:43:12 INFO epoch 23 evaluating [time: 0.65s, valid_score: 0.082700]
+Wed 05 May 2021 16:43:12 INFO valid result: 
+recall@10 : 0.2294    mrr@10 : 0.0827    ndcg@10 : 0.1166    hit@10 : 0.2294    precision@10 : 0.0229    
+Wed 05 May 2021 16:43:12 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 16:45:59 INFO epoch 24 training [time: 166.58s, train loss: 4306.4941]
+Wed 05 May 2021 16:45:59 INFO epoch 24 evaluating [time: 0.63s, valid_score: 0.078300]
+Wed 05 May 2021 16:45:59 INFO valid result: 
+recall@10 : 0.2302    mrr@10 : 0.0783    ndcg@10 : 0.1134    hit@10 : 0.2302    precision@10 : 0.0230    
+Wed 05 May 2021 16:48:46 INFO epoch 25 training [time: 166.85s, train loss: 4304.5813]
+Wed 05 May 2021 16:48:47 INFO epoch 25 evaluating [time: 0.64s, valid_score: 0.081500]
+Wed 05 May 2021 16:48:47 INFO valid result: 
+recall@10 : 0.2367    mrr@10 : 0.0815    ndcg@10 : 0.1174    hit@10 : 0.2367    precision@10 : 0.0237    
+Wed 05 May 2021 16:51:33 INFO epoch 26 training [time: 166.61s, train loss: 4302.3015]
+Wed 05 May 2021 16:51:34 INFO epoch 26 evaluating [time: 0.62s, valid_score: 0.081000]
+Wed 05 May 2021 16:51:34 INFO valid result: 
+recall@10 : 0.2387    mrr@10 : 0.0810    ndcg@10 : 0.1173    hit@10 : 0.2387    precision@10 : 0.0239    
+Wed 05 May 2021 16:54:21 INFO epoch 27 training [time: 166.86s, train loss: 4300.5257]
+Wed 05 May 2021 16:54:22 INFO epoch 27 evaluating [time: 0.64s, valid_score: 0.083600]
+Wed 05 May 2021 16:54:22 INFO valid result: 
+recall@10 : 0.2347    mrr@10 : 0.0836    ndcg@10 : 0.1184    hit@10 : 0.2347    precision@10 : 0.0235    
+Wed 05 May 2021 16:54:22 INFO Saving current best: saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 16:57:09 INFO epoch 28 training [time: 167.28s, train loss: 4299.0680]
+Wed 05 May 2021 16:57:10 INFO epoch 28 evaluating [time: 0.63s, valid_score: 0.082600]
+Wed 05 May 2021 16:57:10 INFO valid result: 
+recall@10 : 0.2347    mrr@10 : 0.0826    ndcg@10 : 0.1178    hit@10 : 0.2347    precision@10 : 0.0235    
+Wed 05 May 2021 16:59:57 INFO epoch 29 training [time: 167.00s, train loss: 4297.1637]
+Wed 05 May 2021 16:59:57 INFO epoch 29 evaluating [time: 0.64s, valid_score: 0.080900]
+Wed 05 May 2021 16:59:57 INFO valid result: 
+recall@10 : 0.2353    mrr@10 : 0.0809    ndcg@10 : 0.1165    hit@10 : 0.2353    precision@10 : 0.0235    
+Wed 05 May 2021 17:02:44 INFO epoch 30 training [time: 166.44s, train loss: 4295.4477]
+Wed 05 May 2021 17:02:44 INFO epoch 30 evaluating [time: 0.65s, valid_score: 0.077300]
+Wed 05 May 2021 17:02:44 INFO valid result: 
+recall@10 : 0.2324    mrr@10 : 0.0773    ndcg@10 : 0.1132    hit@10 : 0.2324    precision@10 : 0.0232    
+Wed 05 May 2021 17:05:31 INFO epoch 31 training [time: 166.85s, train loss: 4293.5753]
+Wed 05 May 2021 17:05:32 INFO epoch 31 evaluating [time: 0.64s, valid_score: 0.081500]
+Wed 05 May 2021 17:05:32 INFO valid result: 
+recall@10 : 0.2335    mrr@10 : 0.0815    ndcg@10 : 0.1166    hit@10 : 0.2335    precision@10 : 0.0234    
+Wed 05 May 2021 17:08:18 INFO epoch 32 training [time: 166.57s, train loss: 4292.3283]
+Wed 05 May 2021 17:08:19 INFO epoch 32 evaluating [time: 0.64s, valid_score: 0.081900]
+Wed 05 May 2021 17:08:19 INFO valid result: 
+recall@10 : 0.2347    mrr@10 : 0.0819    ndcg@10 : 0.1172    hit@10 : 0.2347    precision@10 : 0.0235    
+Wed 05 May 2021 17:11:06 INFO epoch 33 training [time: 166.82s, train loss: 4289.7915]
+Wed 05 May 2021 17:11:06 INFO epoch 33 evaluating [time: 0.63s, valid_score: 0.081900]
+Wed 05 May 2021 17:11:06 INFO valid result: 
+recall@10 : 0.2363    mrr@10 : 0.0819    ndcg@10 : 0.1176    hit@10 : 0.2363    precision@10 : 0.0236    
+Wed 05 May 2021 17:13:53 INFO epoch 34 training [time: 166.76s, train loss: 4289.6238]
+Wed 05 May 2021 17:13:54 INFO epoch 34 evaluating [time: 0.63s, valid_score: 0.081700]
+Wed 05 May 2021 17:13:54 INFO valid result: 
+recall@10 : 0.2411    mrr@10 : 0.0817    ndcg@10 : 0.1186    hit@10 : 0.2411    precision@10 : 0.0241    
+Wed 05 May 2021 17:16:41 INFO epoch 35 training [time: 167.06s, train loss: 4287.6494]
+Wed 05 May 2021 17:16:41 INFO epoch 35 evaluating [time: 0.63s, valid_score: 0.083000]
+Wed 05 May 2021 17:16:41 INFO valid result: 
+recall@10 : 0.2456    mrr@10 : 0.0830    ndcg@10 : 0.1205    hit@10 : 0.2456    precision@10 : 0.0246    
+Wed 05 May 2021 17:19:29 INFO epoch 36 training [time: 167.19s, train loss: 4286.8206]
+Wed 05 May 2021 17:19:29 INFO epoch 36 evaluating [time: 0.63s, valid_score: 0.080900]
+Wed 05 May 2021 17:19:29 INFO valid result: 
+recall@10 : 0.2347    mrr@10 : 0.0809    ndcg@10 : 0.1163    hit@10 : 0.2347    precision@10 : 0.0235    
+Wed 05 May 2021 17:22:16 INFO epoch 37 training [time: 166.91s, train loss: 4284.5139]
+Wed 05 May 2021 17:22:17 INFO epoch 37 evaluating [time: 0.64s, valid_score: 0.080000]
+Wed 05 May 2021 17:22:17 INFO valid result: 
+recall@10 : 0.2395    mrr@10 : 0.0800    ndcg@10 : 0.1168    hit@10 : 0.2395    precision@10 : 0.0239    
+Wed 05 May 2021 17:25:04 INFO epoch 38 training [time: 166.89s, train loss: 4283.8647]
+Wed 05 May 2021 17:25:04 INFO epoch 38 evaluating [time: 0.64s, valid_score: 0.082300]
+Wed 05 May 2021 17:25:04 INFO valid result: 
+recall@10 : 0.2357    mrr@10 : 0.0823    ndcg@10 : 0.1177    hit@10 : 0.2357    precision@10 : 0.0236    
+Wed 05 May 2021 17:25:04 INFO Finished training, best eval result in epoch 27
+Wed 05 May 2021 17:25:04 INFO Loading model structure and parameters from saved/LightSANs-May-05-2021_15-36-10.pth
+Wed 05 May 2021 17:25:05 INFO best valid result: {'recall@10': 0.2347, 'mrr@10': 0.0836, 'ndcg@10': 0.1184, 'hit@10': 0.2347, 'precision@10': 0.0235}
+Wed 05 May 2021 17:25:05 INFO test result: {'recall@10': 0.2284, 'mrr@10': 0.0804, 'ndcg@10': 0.1145, 'hit@10': 0.2284, 'precision@10': 0.0228}
+Wed 05 May 2021 17:25:05 INFO total training and evaluating time: 6535.037383079529
+Wed 05 May 2021 17:25:05 INFO avg time of training an epoch: 166.9004629636422
+Wed 05 May 2021 17:25:05 INFO inference time: 0.6276462078094482
