@@ -16,6 +16,8 @@ Notice: For all sequencial recommendation models, we use the first version of Re
 ## Datasets
 We use three real-world benchmark datasets, including Yelp, Amazon Books and ML-1M. The details about full version of these datasets are on [RecSysDatasets](https://github.com/RUCAIBox/RecSysDatasets). For all datasets, we group the interaction records by users and sort them by the interaction timestamps ascendingly. 
 
+Notice: all datasets should saved in **dataset/**. For example, ml-1m dataset should saved in **dataset/ml-1m/ml-1m.inter**.
+
 ## Parameter Settings
 We apply the leave-one-out strategy for evaluation, and employ HIT@k and NDCG@k to evaluate the performance. For fair evaluation, we pair each ground truth item in the test set with all items of dataset.
 
