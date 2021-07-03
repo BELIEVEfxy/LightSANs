@@ -32,7 +32,8 @@ You can also train the model directly:
 ````
 python run_recbole.py --model=LightSANs --dataset=ml-1m
 ````
-Log files are in **'log/'**, and trained model(.pth) files are in **'saved/'**
+Main file is **'run_recbole.py'**, LightSANs model file is in **'recbole/model/sequential_recommender/lightsans.py'**.
+Log files are in **'log/'**, and trained model(.pth) files are saved in **'saved/'**
 
 ## Acknowledgement
 Any scientific publications that use our codes and datasets should cite the following paper as the reference:
