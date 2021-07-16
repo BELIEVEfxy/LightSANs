@@ -41,15 +41,20 @@ Log files are in **'log/'**, and trained model(.pth) files are saved in **'saved
 Any scientific publications that use our codes and datasets should cite the following paper as the reference:
 ````
 @inproceedings{Fan-SIGIR-2021,
-    title = "Lighter and Better: Low-Rank Decomposed Self-Attention Networks for Next-Item Recommendation",
+    title  = {Lighter and Better: Low-Rank Decomposed Self-Attention Networks for Next-Item Recommendation},
     author = {Xinyan Fan and
               Zheng Liu and
               Jianxun Lian and
               Wayne Xin Zhao and
               Xing Xie and 
               Ji{-}Rong Wen},
-    booktitle = {{SIGIR}},
+    booktitle = {{SIGIR} '21: The 44th International {ACM} {SIGIR} Conference on Research
+               and Development in Information Retrieval, Virtual Event, Canada, July
+               11-15, 2021},
     year = {2021},
+    pages     = {1733--1737},
+    publisher = {{ACM}},
+    doi       = {10.1145/3404835.3462978}
 }
 ````
 If you have any questions for our paper or codes, please send an email to xinyanruc@126.com.
