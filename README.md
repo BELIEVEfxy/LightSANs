@@ -1,6 +1,7 @@
 # LightSANs
 This is our Pytorch implementation for our SIGIR 2021 short paper:
 > Xinyan Fan, Zheng Liu, Jianxun Lian, Wayne Xin Zhao, Xing Xie, and Ji-Rong Wen (2021). "Lighter and Better: Low-Rank Decomposed Self-Attention Networks for Next-Item Recommendation." In SIGIR 2021.
+[PDF](https://www.microsoft.com/en-us/research/uploads/prod/2021/05/LighterandBetter_Low-RankDecomposedSelf-AttentionNetworksforNext-ItemRecommendation.pdf)
 
 ## Overview
 We propose the low-rank decomposed self-attention networks **LightSANs** to improve the effectiveness and efficiency of SANs-based recommenders. Particularly, it projects user's historical items into a small constant number of latent interests, and leverages item-to-interest interaction to generate the user history representation. Besides, the decoupled position encoding is introduced, which expresses the items’ sequential relationships much more precisely. The overall framework of LightSANs is depicted bellow.
